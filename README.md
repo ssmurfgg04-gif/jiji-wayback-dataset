@@ -4,6 +4,49 @@
 
 A production-ready XGBoost dataset extracted from Jiji.co.ke (Kenya) and regional African marketplace domains. This dataset includes listing metadata, pricing information, temporal features, and ML-engineered features for price prediction, category classification, and marketplace analytics.
 
+## 🔬 v2 Update: Real Mined Dataset (2026-08-14)
+
+The original release was a synthetic/generated dataset. This update adds a **real dataset mined from archival sources**:
+
+- **21,283 unique listings** across jiji.co.ke, jiji.com.ng, jiji.co.tz, jiji.com.gh (Wayback Machine + Common Crawl archives)
+- **17,372 Common Crawl HTML captures** parsed into structured rows (price, title, GUID, capture date)
+- **6,236 Wayback Machine API captures** with rich fields (seller stats, phone, category, views, image URLs)
+- **16,020 listings with multi-capture price history** → real temporal features (`days_listed`, `price_delta`, `price_pct_change`, `relative_price`)
+- All local prices normalized to a **KES baseline** (`price_kes`), source currency preserved in `price_local_currency`
+- Country codes use ISO-2 (`ke`, `ng`, `tz`, `ug`, `za`, `et`, `gh`)
+
+**Primary files** (in `data/`):
+
+| File | Description |
+|------|-------------|
+| `jiji_mined_dataset_20260814_182449.csv` | Real mined dataset (CSV) |
+| `jiji_mined_dataset_20260814_182449.parquet` | Real mined dataset (Parquet) |
+| `pipeline_metadata_20260814_182449.json` | Run metadata + country counts |
+
+**Mining scripts** (in `scripts/`):
+
+| Script | Role |
+|--------|------|
+| `wayback_miner.py` | Wayback CDX crawl + API capture for 7 jiji domains |
+| `cc_index_collect.py` | Common Crawl index queries per domain |
+| `cc_fetch.py` | Resumeable WARC segment fetch engine (AWS S3) |
+| `cc_parse.py` | HTML category-page parsing → listing rows |
+| `cc_meta_build.py` | body-hash → (url, ts, country) metadata cache |
+| `path_c_merge.py` | Merge sources, dedup by GUID, currency normalize, feature engineering |
+
+> Note: Common Crawl coverage is ongoing — the fetch engine streams from S3 and can be resumed anytime; re-run `cc_parse.py` to catch up on newly committed bodies, then re-run `path_c_merge.py` to refresh the dataset.
+
+### Quick Start (v2)
+
+```python
+import pandas as pd
+
+df = pd.read_parquet('data/jiji_mined_dataset_20260814_182449.parquet')
+print(df.shape)                          # (21283, 37)
+print(df['country'].value_counts())      # ke, gh, ng, tz
+print(df[['price_kes', 'days_listed']].describe())
+```
+
 ## 📊 Dataset Overview
 
 | Attribute | Value |
@@ -49,15 +92,25 @@ A production-ready XGBoost dataset extracted from Jiji.co.ke (Kenya) and regiona
 ```
 jiji-wayback-dataset/
 ├── README.md                          # This file
-├── jiji_wayback_dataset_*.parquet     # Primary dataset (Parquet format)
-├── jiji_wayback_dataset_*.csv         # Dataset in CSV format
-├── dataset_sample_*.json              # 100-record sample for inspection
-├── dataset_metadata_*.json            # Full schema and statistics
-├── dataset_statistics_*.txt           # Human-readable summary
+├── data/
+│   ├── jiji_mined_dataset_*.parquet   # Real mined dataset (v2, Parquet)
+│   ├── jiji_mined_dataset_*.csv       # Real mined dataset (v2, CSV)
+│   └── pipeline_metadata_*.json       # v2 run metadata
+├── jiji_wayback_dataset_*.parquet     # v1 dataset (Parquet format)
+├── jiji_wayback_dataset_*.csv         # v1 dataset in CSV format
+├── dataset_sample_*.json              # v1 100-record sample
+├── dataset_metadata_*.json            # v1 schema and statistics
+├── dataset_statistics_*.txt           # v1 human-readable summary
 │
 ├── scripts/
-│   ├── jiji_extractor.py             # Production extraction pipeline
-│   └── generate_jiji_dataset.py      # Dataset generator utility
+│   ├── wayback_miner.py               # v2 Wayback crawl pipeline
+│   ├── cc_index_collect.py            # v2 Common Crawl index collector
+│   ├── cc_fetch.py                    # v2 WARC fetch engine
+│   ├── cc_parse.py                    # v2 WARC HTML parser
+│   ├── cc_meta_build.py               # v2 metadata cache builder
+│   ├── path_c_merge.py                # v2 merge + feature engineering
+│   ├── jiji_extractor.py              # v1 production extraction pipeline
+│   └── generate_jiji_dataset.py       # v1 dataset generator utility
 │
 └── docs/
     └── EXTRACTION_ARCHITECTURE.md    # Technical documentation
