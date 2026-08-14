@@ -26,11 +26,6 @@ jobs:
         worker_id: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
     steps:
       - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            scripts/cc_fetch_worker.py
-            cc_manifest/chunk_${{ format('{0:02d}', matrix.worker_id) }}.tsv
-          sparse-checkout-cone-mode: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -42,8 +37,8 @@ jobs:
 
       - name: Fetch + parse chunk
         run: |
-          mv cc_manifest/chunk_${{ format('{0:02d}', matrix.worker_id) }}.tsv scripts/cc_manifest.tsv
-          python scripts/cc_fetch_worker.py --chunk ${{ matrix.worker_id }} --out .
+          CHUNK=$(printf "%02d" ${{ matrix.worker_id }})
+          python scripts/cc_fetch_worker.py --chunk ${{ matrix.worker_id }} --manifest cc_manifest/chunk_${CHUNK}.tsv --out .
 
       - name: Upload rows
         uses: actions/upload-artifact@v4
