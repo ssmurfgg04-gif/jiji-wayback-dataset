@@ -1,0 +1,54 @@
+name: Distributed CC Fetch
+
+on:
+  workflow_dispatch:
+    inputs:
+      workers:
+        description: 'Number of parallel workers'
+        required: false
+        default: '20'
+        type: number
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cc-fetch-matrix
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        worker_id: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts/cc_fetch_worker.py
+            cc_manifest/chunk_${{ format('{0:02d}', matrix.worker_id) }}.tsv
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install --quiet aiohttp
+
+      - name: Fetch + parse chunk
+        run: |
+          mv cc_manifest/chunk_${{ format('{0:02d}', matrix.worker_id) }}.tsv scripts/cc_manifest.tsv
+          python scripts/cc_fetch_worker.py --chunk ${{ matrix.worker_id }} --out .
+
+      - name: Upload rows
+        uses: actions/upload-artifact@v4
+        with:
+          name: cc_rows_part_${{ matrix.worker_id }}
+          path: rows_${{ format('{0:02d}', matrix.worker_id) }}.tsv.gz
+          retention-days: 14
+          if-no-files-found: error
