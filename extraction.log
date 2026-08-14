@@ -1,0 +1,32 @@
+2026-08-14 12:42:36,703 [INFO] ############################################################
+2026-08-14 12:42:36,703 [INFO] # JIJI.CO.KE COMPREHENSIVE DATA EXTRACTION PIPELINE
+2026-08-14 12:42:36,704 [INFO] # Started: 2026-08-14T12:42:36.704003
+2026-08-14 12:42:36,704 [INFO] ############################################################
+2026-08-14 12:42:36,704 [INFO] ============================================================
+2026-08-14 12:42:36,704 [INFO] PATH A: Starting Common Crawl Bulk Extraction
+2026-08-14 12:42:36,704 [INFO] ============================================================
+2026-08-14 12:42:36,704 [INFO] 
+--- Processing domain: jiji.co.ke ---
+2026-08-14 12:42:36,704 [INFO] Fetching recent Common Crawl IDs...
+2026-08-14 12:42:36,926 [ERROR] Failed to get crawl IDs: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /collinfo.json (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:37,150 [WARNING]   CC-MAIN-2024-50 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-50-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:37,409 [WARNING]   CC-MAIN-2024-46 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-46-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:37,620 [WARNING]   CC-MAIN-2024-42 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-42-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:37,829 [WARNING]   CC-MAIN-2024-38 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-38-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:38,042 [WARNING]   CC-MAIN-2024-34 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-34-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:38,255 [WARNING]   CC-MAIN-2024-30 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-30-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:38,469 [WARNING]   CC-MAIN-2024-26 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-26-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:38,683 [WARNING]   CC-MAIN-2024-22 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-22-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:38,900 [WARNING]   CC-MAIN-2024-18 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-18-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:39,116 [WARNING]   CC-MAIN-2024-14 query failed: HTTPSConnectionPool(host='index.commoncrawl.org', port=443): Max retries exceeded with url: /CC-MAIN-2024-14-index?url=%2A.jiji.co.ke%2F%2A&output=json&limit=5000&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml (Caused by NewConnectionError("HTTPSConnection(host='index.commoncrawl.org', port=443): Failed to establish a new connection: [Errno 111] Connection refused"))
+2026-08-14 12:42:39,116 [INFO] Total CC records for jiji.co.ke: 0
+2026-08-14 12:42:39,116 [INFO] 
+Common Crawl extraction complete: 0 listings
+2026-08-14 12:42:39,116 [INFO] 
+============================================================
+2026-08-14 12:42:39,116 [INFO] PATH B: Starting Wayback Machine Mining
+2026-08-14 12:42:39,116 [INFO] ============================================================
+2026-08-14 12:42:39,116 [INFO] 
+--- Processing domain: jiji.co.ke ---
+2026-08-14 12:42:39,116 [INFO] Querying Wayback CDX for jiji.co.ke (20220101 to 20260814)
+2026-08-14 12:44:39,217 [ERROR] Request error: HTTPSConnectionPool(host='web.archive.org', port=443): Max retries exceeded with url: /cdx/search/cdx?url=%2A.jiji.co.ke%2F%2A&output=json&from=20220101&to=20260814&pageSize=150000&page=0&showNumPages=true&filter=statuscode%3A200&collapse=urlkey (Caused by ConnectTimeoutError(<HTTPSConnection(host='web.archive.org', port=443) at 0x7f38fd5a38c0>, 'Connection to web.archive.org timed out. (connect timeout=120)'))

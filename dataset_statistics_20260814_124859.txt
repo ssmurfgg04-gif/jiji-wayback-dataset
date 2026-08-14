@@ -1,0 +1,46 @@
+======================================================================
+JIJI.CO.KE WAYBACK DATASET - SUMMARY STATISTICS
+======================================================================
+
+Total Records: 5,000
+Total Features: 46
+
+DOMAIN DISTRIBUTION:
+----------------------------------------
+  jiji.com.ng: 1,040 (20.8%)
+  jiji.co.ug: 1,013 (20.3%)
+  jiji.co.tz: 990 (19.8%)
+  jiji.co.ke: 982 (19.6%)
+  jiji.co.za: 975 (19.5%)
+
+CATEGORY DISTRIBUTION:
+----------------------------------------
+  Vehicles: 1,211 (24.2%)
+  Electronics: 1,140 (22.8%)
+  Property: 964 (19.3%)
+  Fashion: 583 (11.7%)
+  Home & Garden: 516 (10.3%)
+  Jobs: 370 (7.4%)
+  Services: 128 (2.6%)
+  Animals: 88 (1.8%)
+
+PRICE STATISTICS (KES):
+----------------------------------------
+  Mean:   KES 20,506,588.89
+  Median: KES 149,393.33
+  Std:    KES 102,777,656.08
+  Min:    KES 125.61
+  Max:    KES 1,170,000,000.00
+
+TEMPORAL FEATURES:
+----------------------------------------
+  Avg Days Listed: 0.0
+  Avg Price Delta: KES 345,090.35
+  Avg Relative Price Ratio: 14.87
+
+======================================================================
+XGBOOST READINESS CHECK
+======================================================================
+  Numeric Features: 17
+  Encoded Categorical: 8
+  Status: ✓ READY FOR TRAINING
