@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-08-15T07:48:41.570415",
+  "record_count": 485830,
+  "sources": {
+    "wayback_rows": 6236,
+    "common_crawl_rows": 1129858
+  },
+  "unique_guids": 485830,
+  "with_price": 484414,
+  "multi_capture": 479077,
+  "countries": {
+    "ke": 481814,
+    "ng": 1735,
+    "tz": 57,
+    "ug": 0,
+    "za": 0,
+    "et": 0,
+    "gh": 2224,
+    "other": 0
+  },
+  "columns": [
+    "guid",
+    "title",
+    "price",
+    "price_local_currency",
+    "currency",
+    "price_kes",
+    "country",
+    "category_name",
+    "first_seen",
+    "last_seen",
+    "capture_count",
+    "days_listed",
+    "price_first",
+    "price_last",
+    "price_min",
+    "price_max",
+    "price_delta",
+    "price_pct_change",
+    "relative_price",
+    "has_images",
+    "image_url_count",
+    "seller_id",
+    "seller_name",
+    "count_views",
+    "fav_count",
+    "boost_badge",
+    "rating",
+    "adverts_count",
+    "feedback_count",
+    "phone",
+    "source_cc",
+    "source_wayback"
+  ],
+  "files": {
+    "csv": "jiji_mined_dataset_20260815_074727.csv",
+    "parquet": "jiji_mined_dataset_20260815_074727.parquet"
+  }
+}

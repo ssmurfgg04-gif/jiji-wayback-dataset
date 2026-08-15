@@ -8,10 +8,10 @@ A production-ready XGBoost dataset extracted from Jiji.co.ke (Kenya) and regiona
 
 The original release was a synthetic/generated dataset. This update adds a **real dataset mined from archival sources**:
 
-- **21,283 unique listings** across jiji.co.ke, jiji.com.ng, jiji.co.tz, jiji.com.gh (Wayback Machine + Common Crawl archives)
-- **17,372 Common Crawl HTML captures** parsed into structured rows (price, title, GUID, capture date)
+- **485,830 unique listings** across jiji.co.ke, jiji.com.ng, jiji.co.tz, jiji.com.gh (Wayback Machine + Common Crawl archives)
+- **1,129,858 Common Crawl HTML captures** parsed into structured rows (price, title, GUID, capture date) from **104,628 WARC bodies**
 - **6,236 Wayback Machine API captures** with rich fields (seller stats, phone, category, views, image URLs)
-- **16,020 listings with multi-capture price history** → real temporal features (`days_listed`, `price_delta`, `price_pct_change`, `relative_price`)
+- **479,077 listings with multi-capture price history** → real temporal features (`days_listed`, `price_delta`, `price_pct_change`, `relative_price`)
 - All local prices normalized to a **KES baseline** (`price_kes`), source currency preserved in `price_local_currency`
 - Country codes use ISO-2 (`ke`, `ng`, `tz`, `ug`, `za`, `et`, `gh`)
 
@@ -19,9 +19,9 @@ The original release was a synthetic/generated dataset. This update adds a **rea
 
 | File | Description |
 |------|-------------|
-| `jiji_mined_dataset_20260814_182449.csv` | Real mined dataset (CSV) |
-| `jiji_mined_dataset_20260814_182449.parquet` | Real mined dataset (Parquet) |
-| `pipeline_metadata_20260814_182449.json` | Run metadata + country counts |
+| `jiji_mined_dataset_20260815_074727.csv` | Real mined dataset (CSV, 83.6 MB) |
+| `jiji_mined_dataset_20260815_074727.parquet` | Real mined dataset (Parquet, 23.5 MB) |
+| `pipeline_metadata_20260815_074727.json` | Run metadata + country counts |
 
 **Mining scripts** (in `scripts/`):
 
@@ -29,20 +29,26 @@ The original release was a synthetic/generated dataset. This update adds a **rea
 |--------|------|
 | `wayback_miner.py` | Wayback CDX crawl + API capture for 7 jiji domains |
 | `cc_index_collect.py` | Common Crawl index queries per domain |
-| `cc_fetch.py` | Resumeable WARC segment fetch engine (AWS S3) |
-| `cc_parse.py` | HTML category-page parsing → listing rows |
+| `cc_fetch.py` / `cc_fetch_async.py` | WARC segment fetch engines (sync + async, resumeable) |
+| `cc_partition.py` | Partition index records into 20 worker chunks |
+| `cc_fetch_worker.py` | Distributed matrix worker (fetch + inline parse → rows) |
+| `cc_parse.py` | HTML/JSON body parsing → listing rows |
 | `cc_meta_build.py` | body-hash → (url, ts, country) metadata cache |
 | `path_c_merge.py` | Merge sources, dedup by GUID, currency normalize, feature engineering |
 
-> Note: Common Crawl coverage is ongoing — the fetch engine streams from S3 and can be resumed anytime; re-run `cc_parse.py` to catch up on newly committed bodies, then re-run `path_c_merge.py` to refresh the dataset.
+> The full 718,614-record index is processed via a 20-worker GitHub Actions
+> matrix (`.github/workflows/cc_fetch_matrix.yml`) — each worker fetches its
+> chunk from Common Crawl on its own IP (~12 req/s each → ~240 req/s
+> aggregate) and git-pushes parsed rows to `cc_worker_rows/`. The remaining
+> index pages (5 domains still rate-limited) are collected in background.
 
 ### Quick Start (v2)
 
 ```python
 import pandas as pd
 
-df = pd.read_parquet('data/jiji_mined_dataset_20260814_182449.parquet')
-print(df.shape)                          # (21283, 37)
+df = pd.read_parquet('data/jiji_mined_dataset_20260815_074727.parquet')
+print(df.shape)                          # (485830, 32)
 print(df['country'].value_counts())      # ke, gh, ng, tz
 print(df[['price_kes', 'days_listed']].describe())
 ```
