@@ -51,8 +51,16 @@ jobs:
           git add cc_worker_rows/rows_${CHUNK}.tsv.gz
           if git diff --cached --quiet; then
             echo "no change (rows identical)"
-          else
-            git commit -m "worker ${{ matrix.worker_id }} rows"
-            git pull --rebase origin main --autostash
-            git push origin main
+            exit 0
           fi
+          git commit -m "worker ${{ matrix.worker_id }} rows"
+          for i in 1 2 3 4 5; do
+            if git push origin main 2>/dev/null; then
+              echo "push ok"
+              exit 0
+            fi
+            echo "push attempt $i failed (race), retrying"
+            sleep $((i * 5))
+            git pull --rebase origin main --autostash 2>/dev/null || true
+          done
+          exit 1
